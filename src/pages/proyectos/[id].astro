@@ -1,0 +1,91 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { whatsappUrl } from '../../data/profile';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({ params: { id: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={`${data.title} — Caso de estudio | Mariano Ledesma`} description={data.summary} image={data.cover}>
+  <article>
+    <header class="case-hero shell">
+      <a class="back-link" href="/#trabajos">← Volver a trabajos</a>
+      <div class="case-title-grid">
+        <div data-reveal data-visible="true">
+          <p class="eyebrow">{data.eyebrow} · {data.year}</p>
+          <h1 class="case-title mt-5">{data.title}</h1>
+        </div>
+        <p class="case-summary" data-reveal data-visible="true">{data.summary}</p>
+      </div>
+      <div class="case-meta" data-reveal data-visible="true">
+        <div><span>Rol</span><strong>{data.role}</strong></div>
+        <div><span>Tipo</span><strong>{data.type}</strong></div>
+        <div><span>Estado</span><strong>{data.status === 'conceptual' ? 'Proyecto conceptual' : 'Proyecto real'}</strong></div>
+      </div>
+    </header>
+
+    <div class="case-cover" data-reveal>
+      <img src={data.cover} alt={data.coverAlt} />
+    </div>
+
+    <section class="section shell case-body">
+      <div class="case-prose" data-reveal><Content /></div>
+      <div class="case-two-col">
+        <article data-reveal>
+          <p class="eyebrow">El desafío</p>
+          <h2>Ordenar la complejidad.</h2>
+          <p>{data.problem}</p>
+        </article>
+        <article data-reveal>
+          <p class="eyebrow">La respuesta</p>
+          <h2>Diseñar desde la necesidad.</h2>
+          <p>{data.solution}</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-results">
+      <div class="shell grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
+        <div data-reveal>
+          <p class="eyebrow eyebrow-light">Resultado</p>
+          <h2 class="mt-5 text-5xl text-white sm:text-7xl">Lo que quedó resuelto.</h2>
+        </div>
+        <ol class="result-list">
+          {data.outcomes.map((outcome, index) => (
+            <li data-reveal><span>0{index + 1}</span><p>{outcome}</p></li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section class="section shell">
+      <div class="section-heading" data-reveal>
+        <div><p class="eyebrow">Vistas del proyecto</p><h2 class="mt-4 text-5xl sm:text-7xl">El trabajo, en contexto.</h2></div>
+        <ul class="flex flex-wrap gap-2" aria-label="Tecnologías utilizadas">
+          {data.stack.map((item) => <li class="tag">{item}</li>)}
+        </ul>
+      </div>
+      <div class="gallery mt-14 sm:mt-20">
+        {data.gallery.map((image, index) => (
+          <figure class:list={['gallery-item', { 'gallery-item-wide': index === 0 }]} data-reveal>
+            <img src={image.src} alt={image.alt} loading={index === 0 ? 'eager' : 'lazy'} />
+            <figcaption>{image.alt}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <section class="next-project shell">
+      <p class="eyebrow">¿Pensando en algo parecido?</p>
+      <h2>Podemos darle forma.</h2>
+      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="button button-coral">Contarme tu proyecto <span aria-hidden="true">↗</span></a>
+    </section>
+  </article>
+</BaseLayout>

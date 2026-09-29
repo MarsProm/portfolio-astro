@@ -1,0 +1,26 @@
+---
+import { profile, whatsappUrl } from '../data/profile';
+---
+
+<footer class="footer">
+  <div class="shell py-12 sm:py-16">
+    <div class="grid gap-10 border-b border-white/15 pb-12 lg:grid-cols-[1.5fr_1fr]">
+      <div>
+        <p class="eyebrow eyebrow-light">¿Tenés una idea?</p>
+        <h2 class="mt-5 max-w-3xl text-4xl text-white sm:text-6xl">Convirtámosla en una experiencia que la gente entienda y quiera usar.</h2>
+      </div>
+      <div class="flex flex-col items-start justify-end gap-5 lg:items-end">
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="button button-coral">Escribirme por WhatsApp <span aria-hidden="true">↗</span></a>
+        <a href={`mailto:${profile.email}`} class="footer-link">{profile.email}</a>
+      </div>
+    </div>
+    <div class="flex flex-col gap-6 pt-8 text-sm text-white/65 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {new Date().getFullYear()} Mariano Ledesma. Hecho con intención.</p>
+      <div class="flex flex-wrap gap-6">
+        <a class="footer-link" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="footer-link" href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="footer-link" href={profile.cv} target="_blank" rel="noopener noreferrer">CV</a>
+      </div>
+    </div>
+  </div>
+</footer>

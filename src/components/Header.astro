@@ -1,0 +1,19 @@
+---
+import { whatsappUrl } from '../data/profile';
+---
+
+<header class="site-header" data-header>
+  <div class="shell flex h-20 items-center justify-between gap-6">
+    <a href="/" class="brand" aria-label="Mariano Ledesma, inicio">
+      <span class="brand-mark" aria-hidden="true">ML</span>
+      <span class="hidden sm:block">Mariano Ledesma</span>
+    </a>
+    <nav aria-label="Navegación principal" class="flex items-center gap-3 sm:gap-7">
+      <a href="/#trabajos" class="nav-link hidden sm:inline-flex">Trabajos</a>
+      <a href="/#servicios" class="nav-link hidden sm:inline-flex">Servicios</a>
+      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="button button-small button-dark">
+        Hablemos <span aria-hidden="true">↗</span>
+      </a>
+    </nav>
+  </div>
+</header>
